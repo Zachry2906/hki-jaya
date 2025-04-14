@@ -1,6 +1,6 @@
 <?php
 global $conn;
-include "connector.php";
+include "koneksi.php";
 session_start();
 
 $username = $_POST['username'];

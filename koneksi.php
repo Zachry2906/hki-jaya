@@ -1,13 +1,17 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = ""; 
-$db   = "hki"; 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hki";
 
-$conn = new mysqli($host, $user, $pass, $db);
+try {
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn->set_charset("utf8");
 
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+    if ($conn->connect_error) {
+        throw new Exception("Koneksi gagal: " . $conn->connect_error);
+    }
+
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
-?>

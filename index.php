@@ -1,32 +1,25 @@
 <?php
+global $conn;
 require('fpdf.php');
-$host = "localhost";
-$user = "root"; // Ganti dengan user database
-$pass = ""; // Ganti dengan password database
-$dbname = "hki";
+require('koneksi.php');
 
-// Koneksi ke database
-$conn = new mysqli($host, $user, $pass, $dbname);
-if ($conn->connect_error) {
-    die("Koneksi ke database gagal: " . $conn->connect_error);
-}
-
-// Ambil data surat terakhir
 $sql = "SELECT * FROM detail_permohonan ORDER BY id DESC LIMIT 1";
 $result = $conn->query($sql);
 $data = $result->fetch_assoc();
 
-// Pastikan data yang dibutuhkan ada
 $jenis_ciptaan = isset($data['jenis_ciptaan']) ? $data['jenis_ciptaan'] : 'Tidak tersedia';
 $judul = isset($data['judul']) ? $data['judul'] : 'Tidak tersedia';
 $jenis_pendanaan = isset($data['jenis_pendanaan']) ? $data['jenis_pendanaan'] : 'Tidak tersedia';
 
-class PDF extends FPDF {
-    function Header() {
+class PDF extends FPDF
+{
+    function Header()
+    {
         $this->Ln(1);
     }
 
-    function JustifyText($text) {
+    function JustifyText($text)
+    {
         $this->SetFont('Times', '', 10); // Menggunakan Times New Roman
         $words = explode(' ', $text);
         $line = '';
@@ -49,7 +42,8 @@ class PDF extends FPDF {
         }
     }
 
-    function PrintJustifiedLine($line, $pageWidth) {
+    function PrintJustifiedLine($line, $pageWidth)
+    {
         $words = explode(' ', trim($line));
         $numWords = count($words);
         if ($numWords === 0) return;

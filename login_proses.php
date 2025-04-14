@@ -31,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute()) {
             // Reset session data_id biar input baru dimulai fresh
             unset($_SESSION['data_id']);
-            
             // Redirect ke halaman input
             header("Location: menu_input.php");
             exit;

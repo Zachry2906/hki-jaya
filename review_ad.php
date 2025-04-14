@@ -1,5 +1,5 @@
 <?php
-include 'connector.php';
+include 'koneksi.php';
 
 // Proses update status dan unggah sertifikat
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -1,16 +1,7 @@
 <?php
+global $conn;
 session_start();
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "hki";
-
-// Koneksi ke database
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
+require('koneksi.php');
 
 $dataid = $_SESSION['dataid'] ?? '';
 
@@ -26,7 +17,6 @@ $result = $stmt->get_result();
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,62 +28,65 @@ $result = $stmt->get_result();
     <title>Daftar Permohonan User</title>
 </head>
 <body class="bg p-8 flex items-center justify-center min-h-screen">
-    <div class="bg-gray-100 w-full max-w-5xl p-8 rounded-lg shadow-lg">
-        <h1 class="text-2xl font-bold mb-4">DAFTAR PERMOHONAN USER</h1>
+<div class="bg-gray-100 w-full max-w-5xl p-8 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">DAFTAR PERMOHONAN USER</h1>
 
-        <!-- Tombol Ajukan Permohonan -->
-        <div class="mb-4 flex justify-end">
-            <a href="inputawal.php">
-                <button class="bg-green-700 text-white px-4 py-2 rounded flex items-center">
-                    <i class="fas fa-plus mr-2"></i> Ajukan Permohonan
-                </button>
-            </a>
-        </div>
-
-        <div class="relative mb-3">
-            <input class="p-2 rounded-lg border border-gray-100" placeholder="Cari Judul" type="text"/>
-        </div>
-        
-        <div class="bg-white p-4 rounded-lg shadow flex justify-between items-start">
-            <table class="border-separate border-spacing-y-2 w-full">
-                <thead>
-                    <tr>
-                        <th>JUDUL</th>
-                        <th>SCAN KTP</th>
-                        <th>CONTOH KARYA</th>
-                        <th>SURAT PERNYATAAN</th>
-                        <th>SURAT PENGALIHAN HAK CIPTA</th>
-                        <th>STATUS</th>
-                        <th>SERTIFIKAT</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr class="bg-white">
-                                <td><?= htmlspecialchars($row['judul']) ?></td>
-                                <td><a href='uploads/<?= htmlspecialchars($row['file_ktp']) ?>' class='button'>Unduh</a></td>
-                                <td><a href='uploads/<?= htmlspecialchars($row['file_contoh_karya']) ?>' class='button'>Unduh</a></td>
-                                <td><a href='uploads/<?= htmlspecialchars($row['file_sp']) ?>' class='button'>Unduh</a></td>
-                                <td><a href='uploads/<?= htmlspecialchars($row['file_sph']) ?>' class='button'>Unduh</a></td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr><td colspan="7">Tidak ada data</td></tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-
-        <br>
-        <div>
-            <a href="menu_input.php">
-                <button type="button" class="bg-teal-700 text-white px-4 py-2 rounded">SEBELUMNYA</button>
-            </a>
-        </div>
+    <!-- Tombol Ajukan Permohonan -->
+    <div class="mb-4 flex justify-end">
+        <a href="inputawal.php">
+            <button class="bg-green-700 text-white px-4 py-2 rounded flex items-center">
+                <i class="fas fa-plus mr-2"></i> Ajukan Permohonan
+            </button>
+        </a>
     </div>
+
+    <div class="relative mb-3">
+        <input class="p-2 rounded-lg border border-gray-100" placeholder="Cari Judul" type="text"/>
+    </div>
+
+    <div class="bg-white p-4 rounded-lg shadow flex justify-between items-start">
+        <table class="border-separate border-spacing-y-2 w-full">
+            <thead>
+            <tr>
+                <th>JUDUL</th>
+                <th>SCAN KTP</th>
+                <th>CONTOH KARYA</th>
+                <th>SURAT PERNYATAAN</th>
+                <th>SURAT PENGALIHAN HAK CIPTA</th>
+                <th>STATUS</th>
+                <th>SERTIFIKAT</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php if ($result->num_rows > 0): ?>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr class="bg-white">
+                        <td><?= htmlspecialchars($row['judul']) ?></td>
+                        <td><a href='uploads/<?= htmlspecialchars($row['file_ktp']) ?>' class='button'>Unduh</a></td>
+                        <td><a href='uploads/<?= htmlspecialchars($row['file_contoh_karya']) ?>'
+                               class='button'>Unduh</a></td>
+                        <td><a href='uploads/<?= htmlspecialchars($row['file_sp']) ?>' class='button'>Unduh</a></td>
+                        <td><a href='uploads/<?= htmlspecialchars($row['file_sph']) ?>' class='button'>Unduh</a></td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="7">Tidak ada data</td>
+                </tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <div>
+        <a href="menu_input.php">
+            <button type="button" class="bg-teal-700 text-white px-4 py-2 rounded">SEBELUMNYA</button>
+        </a>
+    </div>
+</div>
 </body>
 </html>
 

@@ -1,4 +1,5 @@
 <?php
+global $conn;
 session_start();
 include 'koneksi.php';
 
@@ -16,7 +17,8 @@ if (!isset($_POST['dataid']) || empty($_POST['dataid'])) {
 $dataid = $_POST['dataid'];
 $targetDir = "uploads/";
 
-function uploadFile($inputName, $session_id) {
+function uploadFile($inputName, $session_id)
+{
     global $targetDir;
     if (!isset($_FILES[$inputName]) || $_FILES[$inputName]['error'] === 4) {
         return null;
